@@ -1,0 +1,63 @@
+
+services:
+  moviereviewapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: moviereviewapi
+    ports:
+      - "5238:5238"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - REDIS_CONNECTION_STRING=redis:6379
+    depends_on:
+      - sqlserver
+      - redis
+      - elasticsearch
+    networks:
+      - elastic
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    ports:
+      - "1433:1433" # SQL Server'ın varsayılan portu
+    environment:
+      SA_PASSWORD: "YourStrong!Password" # Güçlü bir şifre belirleyin
+      ACCEPT_EULA: "Y" # Lisans sözleşmesini kabul edin
+    networks:
+      - elastic
+    
+      
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - elastic
+    
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.10
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200"
+    networks:
+      - elastic
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.10
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    driver: bridge

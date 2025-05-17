@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\MovieReviewApi",
+    "\\src\\MovieReviewApi\\Constants",
+    "\\src\\MovieReviewApi\\Controllers",
+    "\\src\\MovieReviewApi\\Data",
+    "\\src\\MovieReviewApi\\DTOs",
+    "\\src\\MovieReviewApi\\Helpers",
+    "\\src\\MovieReviewApi\\Interfaces",
+    "\\src\\MovieReviewApi\\Properties"
+  ],
+  "SelectedNode": "\\src\\MovieReviewApi\\Repositories\\WatchlistRepository.cs",
+  "PreviewInSolutionExplorer": false
+}
